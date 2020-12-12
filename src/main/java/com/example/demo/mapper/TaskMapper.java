@@ -6,6 +6,7 @@ import com.example.demo.model.dtos.CreateTaskDto;
 import com.example.demo.model.dtos.TaskDto;
 import com.example.demo.model.dtos.UpdateTaskDto;
 import com.example.demo.model.dtos.UserDto;
+import com.example.demo.service.TaskService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,8 @@ import java.util.stream.Collectors;
 public class TaskMapper {
 @Autowired
 private UserService userService;
+@Autowired
+private TaskService taskService;
     public TaskDto toDto(Task task) {
         return new TaskDto(
                 task.getTaskId(),
@@ -46,7 +49,7 @@ private UserService userService;
     }
 
     public Task fromDto(UpdateTaskDto updateTaskDto) {
-        Task task = new Task();
+        Task task= taskService.getTask(updateTaskDto.getTaskId());
         task.setTaskId(updateTaskDto.getTaskId());
         task.setTitle(updateTaskDto.getTitle());
 //        task.setDateAdded(LocalDateTime.now());

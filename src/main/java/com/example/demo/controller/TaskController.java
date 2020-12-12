@@ -4,12 +4,12 @@ import com.example.demo.mapper.TaskMapper;
 import com.example.demo.model.dtos.CreateTaskDto;
 import com.example.demo.model.dtos.CreateUserDto;
 import com.example.demo.model.dtos.TaskDto;
+import com.example.demo.model.dtos.UpdateTaskDto;
+import com.example.demo.model.enums.Status;
+import com.example.demo.model.enums.Type;
 import com.example.demo.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,6 +39,26 @@ public class TaskController {
     @GetMapping("/tasks/userId={userId}")
     public List<TaskDto> getTaskByUser(@PathVariable("userId") long userId) {
         return taskMapper.toDtos(taskService.getTasksByUser(userId));
+    }
 
+    @GetMapping("/tasks/filterTasks")
+    private List<TaskDto> getTasksByStatusAndTypeAndUser(
+            @RequestParam("status") Status status,
+            @RequestParam("type") Type type,
+            @RequestParam("userId") long userId
+    ) {
+        return taskMapper.toDtos(taskService.getTaskByStatusAndTypeAndUser(status, type, userId));
+
+    }
+    @PutMapping("/updateTask")
+    public void updateTask(UpdateTaskDto updateTaskDto) {
+        taskService.updateTask(taskMapper.fromDto(updateTaskDto));
+    }
+
+    @PutMapping("/updateTaskUser")
+    public void updateTaskUser(@RequestParam("taskId") long taskId,
+                               @RequestParam("userId") long userId)
+    {
+        taskService.updateTaskUser(taskId,userId);
     }
 }
