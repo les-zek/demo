@@ -39,6 +39,8 @@ private UserService userService;
         task.setDateAdded(LocalDateTime.now());
         task.setType(createTaskDto.getType());
         task.setStatus(createTaskDto.getStatus());
+        // zwraca usera po id przypisujacej wlasciciela zadania
+        task.setUser(userService.getUser(createTaskDto.getUserId()));
         // getUserbyId
         return task;
     }
