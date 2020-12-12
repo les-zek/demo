@@ -1,3 +1,7 @@
+/*
+*
+* Leszek Żebrowski, 2020-12-13
+ */
 package com.example.demo;
 
 import org.springframework.boot.SpringApplication;
