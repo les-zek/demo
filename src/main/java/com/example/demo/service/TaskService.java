@@ -27,10 +27,6 @@ public class TaskService {
         return taskRepository.findById(taskId).orElseGet(() -> new Task());
     }
 
-// dodatkowo metoda 1 - pokaz wszystkie taski w kolejnosci od najstarszego do najnowszego
-    public List<Task> getTasks() {
-        return taskRepository.findAll(Sort.by(Sort.Direction.ASC, "dateAdded"));
-    }
 
     public List<Task> getTasksByUser(long userId) {
         User user = userRepository.findById(userId).orElseGet(() -> new User());
@@ -52,6 +48,11 @@ public class TaskService {
         User user = userRepository.findById(userId).orElseGet(() -> new User());
         task.setUser(user);
         taskRepository.save(task);
+    }
+
+    // dodatkowo metoda 1 - pokaz wszystkie taski w kolejnosci od najstarszego do najnowszego
+    public List<Task> getTasks() {
+        return taskRepository.findAll(Sort.by(Sort.Direction.ASC, "dateAdded"));
     }
 
     // dodatkowa metoda 2 - pokaz wszystkie taski o wybranym statusie

@@ -19,12 +19,6 @@ public class TaskController {
     @Autowired
     private TaskMapper taskMapper;
 
-// dodatkowo metoda 1 - pokaz wszystkie taski w kolejnosci od najstarszego do najnowszego
-
-    @GetMapping("/tasks")
-    public List<TaskDto> getTasks(){
-        return taskMapper.toDtos(taskService.getTasks());
-    }
     // tworzenie zadania dla podanego użytkownika
 
     @PostMapping("/addTask")
@@ -64,7 +58,12 @@ public class TaskController {
     {
         taskService.updateTaskUser(taskId,userId);
     }
+// dodatkowo metoda 1 - pokaz wszystkie taski w kolejnosci od najstarszego do najnowszego
 
+    @GetMapping("/tasks")
+    public List<TaskDto> getTasks(){
+        return taskMapper.toDtos(taskService.getTasks());
+    }
 //  dodatkowa metoda 2 - pokaz wszystkie taski o wybranym statusie
 
     @GetMapping("/tasks/status={status}")
