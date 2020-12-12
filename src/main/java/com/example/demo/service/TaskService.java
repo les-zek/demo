@@ -27,7 +27,7 @@ public class TaskService {
         return taskRepository.findById(taskId).orElseGet(() -> new Task());
     }
 
-    // dodatkowo metoda 1 - pokaz wszystkie taski od w kolejnosci najstarszego do najnowszego
+// dodatkowo metoda 1 - pokaz wszystkie taski w kolejnosci od najstarszego do najnowszego
     public List<Task> getTasks() {
         return taskRepository.findAll(Sort.by(Sort.Direction.ASC, "dateAdded"));
     }

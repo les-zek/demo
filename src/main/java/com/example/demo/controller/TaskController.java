@@ -19,7 +19,8 @@ public class TaskController {
     @Autowired
     private TaskMapper taskMapper;
 
-    // dodatkowo metoda 1 - pokaz wszystkie taski
+// dodatkowo metoda 1 - pokaz wszystkie taski w kolejnosci od najstarszego do najnowszego
+
     @GetMapping("/tasks")
     public List<TaskDto> getTasks(){
         return taskMapper.toDtos(taskService.getTasks());
