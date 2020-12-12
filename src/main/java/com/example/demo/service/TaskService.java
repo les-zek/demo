@@ -16,8 +16,8 @@ import java.util.List;
 public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
-@Autowired
-private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public void createTask(Task task) {
         taskRepository.save(task);
@@ -27,32 +27,40 @@ private UserRepository userRepository;
         return taskRepository.findById(taskId).orElseGet(() -> new Task());
     }
 
+    // dodatkowo metoda 1 - pokaz wszystkie taski
+    public List<Task> getTasks() {
+        return taskRepository.findAll();
+    }
+
     public List<Task> getTasksByUser(long userId) {
-        User user = userRepository.findById(userId).orElseGet(()-> new User());
+        User user = userRepository.findById(userId).orElseGet(() -> new User());
         return taskRepository.findAllByUser(user);
     }
 
-    public List<Task> getTaskByStatusAndTypeAndUser(Status status, Type type, long userId){
-        User user = userRepository.findById(userId).orElseGet(()-> new User());
+    public List<Task> getTaskByStatusAndTypeAndUser(Status status, Type type, long userId) {
+        User user = userRepository.findById(userId).orElseGet(() -> new User());
         return taskRepository.findAllByStatusAndTypeAndUser(status, type, user);
     }
 
-     public void updateTask(Task task) {
+    public void updateTask(Task task) {
         taskRepository.save(task);
 
     }
-    public void updateTaskUser(long taskId, long userId ){
-        Task task=getTask(taskId);
-        User user= userRepository.findById(userId).orElseGet(()-> new User());
+
+    public void updateTaskUser(long taskId, long userId) {
+        Task task = getTask(taskId);
+        User user = userRepository.findById(userId).orElseGet(() -> new User());
         task.setUser(user);
         taskRepository.save(task);
     }
-    // dodatkowa metoda - wyswietl wszystkie taski o wybranym statusie
-    public List<Task> getTasksByStatus(Status status){
-        return taskRepository.findTasksByStatus(status);
+
+    // dodatkowa metoda 2 - pokaz wszystkie taski o wybranym statusie
+    public List<Task> getTasksByStatus(Status status) {
+        return taskRepository.findAllByStatus(status);
     }
-    // dodatkowa metoda - wyswietl wszystkie taski o wybranym typie
-    public List<Task> getTasksByType(Type type){
-        return taskRepository.findTasksByType(type);
+
+    // dodatkowa metoda 3 - pokaz wszystkie taski o wybranym typie
+    public List<Task> getTasksByType(Type type) {
+        return taskRepository.findAllByType(type);
     }
 }

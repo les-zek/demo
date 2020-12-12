@@ -1,10 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.mapper.TaskMapper;
-import com.example.demo.model.dtos.CreateTaskDto;
-import com.example.demo.model.dtos.CreateUserDto;
-import com.example.demo.model.dtos.TaskDto;
-import com.example.demo.model.dtos.UpdateTaskDto;
+import com.example.demo.model.dtos.*;
 import com.example.demo.model.enums.Status;
 import com.example.demo.model.enums.Type;
 import com.example.demo.service.TaskService;
@@ -21,8 +18,13 @@ public class TaskController {
     private TaskService taskService;
     @Autowired
     private TaskMapper taskMapper;
-    // tworzenie zadania dla podanego użytkownika
 
+    // dodatkowo metoda 1 - pokaz wszystkie taski
+    @GetMapping("/tasks")
+    public List<TaskDto> getTasks(){
+        return taskMapper.toDtos(taskService.getTasks());
+    }
+    // tworzenie zadania dla podanego użytkownika
 
     @PostMapping("/addTask")
     public void addTask(CreateTaskDto createTaskDto) {
@@ -61,20 +63,17 @@ public class TaskController {
     {
         taskService.updateTaskUser(taskId,userId);
     }
-    // dodatkowa metoda - wyswietl wszystkie taski o wybranym statusie
 
-    @GetMapping("/tasks/filterTasksByStatus")
-    private List<TaskDto> getTasksByStatus(
-            @RequestParam("status") Status status
-    ) {
+//  dodatkowa metoda 2 - pokaz wszystkie taski o wybranym statusie
+
+    @GetMapping("/tasks/status={status}")
+    public List<TaskDto> getTasksByStatus(@PathVariable("status") Status status) {
         return taskMapper.toDtos(taskService.getTasksByStatus(status));
     }
-    // dodatkowa metoda - wyswietl wszystkie taski o wybranym typie
+// dodatkowa metoda 3 - pokaz wszystkie taski o wybranym typie
 
-    @GetMapping("/tasks/filterTasksByType")
-    private List<TaskDto> getTasksByType(
-            @RequestParam("type") Type type
-    ) {
+    @GetMapping("/tasks/type={type}")
+    public List<TaskDto> getTasksByType(@PathVariable("type") Type type) {
         return taskMapper.toDtos(taskService.getTasksByType(type));
     }
 }
