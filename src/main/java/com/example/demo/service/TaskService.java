@@ -37,7 +37,7 @@ private UserRepository userRepository;
         return taskRepository.findAllByStatusAndTypeAndUser(status, type, user);
     }
 
-    public void updateTask(Task task) {
+     public void updateTask(Task task) {
         taskRepository.save(task);
 
     }
@@ -46,5 +46,13 @@ private UserRepository userRepository;
         User user= userRepository.findById(userId).orElseGet(()-> new User());
         task.setUser(user);
         taskRepository.save(task);
+    }
+    // dodatkowa metoda - wyswietl wszystkie taski o wybranym statusie
+    public List<Task> getTasksByStatus(Status status){
+        return taskRepository.findTasksByStatus(status);
+    }
+    // dodatkowa metoda - wyswietl wszystkie taski o wybranym typie
+    public List<Task> getTasksByType(Type type){
+        return taskRepository.findTasksByType(type);
     }
 }

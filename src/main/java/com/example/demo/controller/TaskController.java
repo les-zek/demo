@@ -25,7 +25,7 @@ public class TaskController {
 
 
     @PostMapping("/addTask")
-    public void addTaks(CreateTaskDto createTaskDto) {
+    public void addTask(CreateTaskDto createTaskDto) {
         taskService.createTask(taskMapper.fromDto(createTaskDto));
     }
 
@@ -60,5 +60,21 @@ public class TaskController {
                                @RequestParam("userId") long userId)
     {
         taskService.updateTaskUser(taskId,userId);
+    }
+    // dodatkowa metoda - wyswietl wszystkie taski o wybranym statusie
+
+    @GetMapping("/tasks/filterTasksByStatus")
+    private List<TaskDto> getTasksByStatus(
+            @RequestParam("status") Status status
+    ) {
+        return taskMapper.toDtos(taskService.getTasksByStatus(status));
+    }
+    // dodatkowa metoda - wyswietl wszystkie taski o wybranym typie
+
+    @GetMapping("/tasks/filterTasksByType")
+    private List<TaskDto> getTasksByType(
+            @RequestParam("type") Type type
+    ) {
+        return taskMapper.toDtos(taskService.getTasksByType(type));
     }
 }
